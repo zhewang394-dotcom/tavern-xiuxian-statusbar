@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Vue 特性开关：pinia / @vue/devtools-kit 被 externals 外部化到 CDN（见 webpack.config.ts），
+      其 ESM 在模块求值时会裸引用这些全局，而 DefinePlugin 只作用于 webpack 打包代码、够不到 CDN ESM。
+      必须在此定义为运行时全局，否则「__VUE_PROD_DEVTOOLS__ is not defined」会导致 Vue 挂载崩溃、页面空白。
+    -->
+    <script>
+      window.__VUE_OPTIONS_API__ = false;
+      window.__VUE_PROD_DEVTOOLS__ = false;
+      window.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
+    </script>
+    <title>修仙状态栏</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="./index.ts"></script>
+  </body>
+</html>

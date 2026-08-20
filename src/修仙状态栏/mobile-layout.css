@@ -1,0 +1,706 @@
+/*
+ * 手动手机排版。
+ * 参考 xiuxian-statusbar@2a608ab 的紧凑思路，按当前源码结构重写；
+ * 仅在根节点带 .xy-layout-mobile 时生效，PC 排版保持原样。
+ */
+
+/* 设置面板中的排版选择器 */
+.xy-layout-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.xy-layout-opt {
+  display: grid;
+  grid-template-columns: 27px minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 9px 10px;
+}
+
+.xy-layout-opt-icon {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 22px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  color: var(--xy-gold-deep);
+  font-size: 21px;
+  line-height: 1;
+}
+
+.xy-layout-opt-icon.is-phone {
+  width: 17px;
+  height: 25px;
+  margin-inline: auto;
+  border-radius: 5px;
+  font-size: 19px;
+}
+
+.xy-layout-opt-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.xy-layout-opt .xy-set-opt-name,
+.xy-layout-opt .xy-set-opt-tag {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 折叠卡片标记：PC 中完全隐藏 */
+.xy-mobile-card-caret {
+  display: none;
+}
+
+/* ============ 手机模式总框架 ============ */
+.xy-app.xy-layout-mobile {
+  max-width: 440px;
+  margin: 8px auto 24px;
+  padding: 0 6px;
+}
+
+.xy-layout-mobile .xy-bg-mountain {
+  opacity: 0.48;
+}
+
+.xy-layout-mobile .xy-crane {
+  transform: scale(0.78);
+  transform-origin: center;
+}
+
+.xy-layout-mobile .xy-scroll {
+  padding: 13px 9px 11px;
+  border-radius: 10px;
+}
+
+.xy-layout-mobile .xy-scroll-collapsed {
+  padding: 7px 9px;
+}
+
+.xy-layout-mobile .xy-app-collapse-bar {
+  position: static;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-bottom: 7px;
+}
+
+.xy-layout-mobile .xy-scroll-collapsed .xy-app-collapse-bar {
+  margin-bottom: 0;
+}
+
+.xy-layout-mobile .xy-edit-toggle,
+.xy-layout-mobile .xy-summary-btn,
+.xy-layout-mobile .xy-settings-btn,
+.xy-layout-mobile .xy-app-collapse-btn {
+  gap: 2px;
+  margin-left: 0;
+  padding: 3px 6px;
+  font-size: 9.5px;
+  letter-spacing: 0.5px;
+}
+
+.xy-layout-mobile .xy-app-collapse-tag {
+  margin-right: auto;
+  overflow: hidden;
+  font-size: 10.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.xy-layout-mobile .xy-hero {
+  margin-bottom: 9px;
+  padding: 2px 1px 9px;
+}
+
+.xy-layout-mobile .xy-hero-top {
+  gap: 4px;
+}
+
+.xy-layout-mobile .xy-name-block {
+  gap: 9px;
+}
+
+.xy-layout-mobile .xy-user-avatar {
+  flex-basis: 50px;
+  width: 50px;
+  height: 50px;
+  border-width: 1px;
+  font-size: 22px;
+}
+
+.xy-layout-mobile .xy-user-avatar-cam {
+  width: 17px;
+  height: 17px;
+}
+
+.xy-layout-mobile .xy-name {
+  font-size: 25px;
+  letter-spacing: 3px;
+}
+
+.xy-layout-mobile .xy-realm {
+  gap: 5px;
+}
+
+.xy-layout-mobile .xy-realm-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.xy-layout-mobile .xy-realm-value {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.xy-layout-mobile .xy-meta-line {
+  gap: 4px 8px;
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+.xy-layout-mobile .xy-meta-item i {
+  width: 14px;
+  height: 14px;
+  font-size: 8px;
+  line-height: 14px;
+}
+
+/* ============ 总览与技艺 ============ */
+.xy-layout-mobile .xy-overview-grid,
+.xy-layout-mobile .xy-skill-layout {
+  grid-template-columns: 1fr;
+  gap: 7px;
+}
+
+.xy-layout-mobile .xy-resources,
+.xy-layout-mobile .xy-traits-panel,
+.xy-layout-mobile .xy-skill-panel {
+  padding: 7px;
+}
+
+.xy-layout-mobile .xy-bar {
+  min-height: 20px;
+  gap: 5px;
+}
+
+.xy-layout-mobile .xy-bar-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.xy-layout-mobile .xy-bar-num {
+  font-size: 9px;
+}
+
+.xy-layout-mobile .xy-trait-cards {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 5px;
+}
+
+.xy-layout-mobile .xy-overview-trait {
+  min-height: 52px;
+  padding: 6px;
+  gap: 3px 4px;
+}
+
+.xy-layout-mobile .xy-overview-trait > strong {
+  overflow-wrap: anywhere;
+  font-size: 11.5px;
+}
+
+.xy-layout-mobile .xy-trait-kicker,
+.xy-layout-mobile .xy-trait-attrs > span {
+  font-size: 8px;
+}
+
+.xy-layout-mobile .xy-trait-attrs b {
+  font-size: 10px;
+}
+
+.xy-layout-mobile .xy-status-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 10px;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill-group-title {
+  margin-bottom: 5px;
+  font-size: 11px;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill {
+  min-height: 48px;
+  grid-template-columns: 28px 31px minmax(0, 1fr);
+  gap: 4px;
+  padding: 5px;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill-toggle {
+  grid-template-columns: 28px 31px minmax(0, 1fr);
+  gap: 4px;
+}
+
+.xy-layout-mobile .xy-skill-seal {
+  width: 28px;
+  height: 28px;
+}
+
+.xy-layout-mobile .xy-skill-seal > span {
+  width: 22px;
+  height: 22px;
+  font-size: 9px;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill-name {
+  padding-right: 0;
+  font-size: 9px;
+  letter-spacing: 0;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill-num {
+  font-size: 10px;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill-recipe-count {
+  top: auto;
+  right: 2px;
+  bottom: 2px;
+  padding: 0 3px;
+  font-size: 6px;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill:has(.xy-skill-recipe-count) .xy-skill-name {
+  padding-right: 0;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-skill-wrap:has(.xy-skill.open) {
+  grid-column: 1 / -1;
+}
+
+.xy-layout-mobile .xy-skill-panel .xy-recipe-list {
+  grid-template-columns: 1fr;
+  gap: 5px;
+}
+
+/* ============ 主导航与筛选 ============ */
+.xy-layout-mobile .xy-tabs {
+  gap: 2px;
+  margin-bottom: 8px;
+  padding: 3px;
+}
+
+.xy-layout-mobile .xy-tab {
+  min-width: 45px;
+  padding: 5px 3px;
+  font-size: 10px;
+}
+
+.xy-layout-mobile .xy-tab-icon {
+  font-size: 14px;
+}
+
+.xy-layout-mobile .xy-page {
+  gap: 7px;
+}
+
+.xy-layout-mobile .xy-storage-tabs {
+  gap: 2px;
+  padding: 2px;
+}
+
+.xy-layout-mobile .xy-storage-tabs .xy-stab {
+  flex: 1 0 49px;
+  padding: 5px 4px;
+  font-size: 10.5px;
+  letter-spacing: 1px;
+}
+
+.xy-layout-mobile .xy-stab em {
+  margin-left: 2px;
+  font-size: 8px;
+}
+
+.xy-layout-mobile .xy-rumor-filter {
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.xy-layout-mobile .xy-chip {
+  padding: 3px 8px;
+  font-size: 9.5px;
+  letter-spacing: 1px;
+}
+
+.xy-layout-mobile .xy-stone {
+  padding: 5px 9px;
+}
+
+.xy-layout-mobile .xy-stone-label {
+  font-size: 10.5px;
+}
+
+.xy-layout-mobile .xy-stone-value {
+  font-size: 15px;
+}
+
+/* ============ 手机长卡片折叠 ============ */
+.xy-layout-mobile .xy-item-grid,
+.xy-layout-mobile .xy-art-grid,
+.xy-layout-mobile .xy-assets-grid {
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.xy-layout-mobile .xy-art,
+.xy-layout-mobile .xy-item,
+.xy-layout-mobile .xy-asset-card {
+  min-width: 0;
+  padding: 7px 9px;
+  border-radius: 5px;
+  transform: none;
+}
+
+.xy-layout-mobile .xy-art:hover,
+.xy-layout-mobile .xy-item:hover {
+  transform: none;
+}
+
+.xy-layout-mobile .xy-mobile-card-head {
+  align-items: center;
+  min-width: 0;
+  margin-bottom: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.xy-layout-mobile .xy-mobile-card-head:focus-visible {
+  outline: 1px solid var(--xy-cinnabar);
+  outline-offset: 2px;
+}
+
+.xy-layout-mobile .xy-mobile-card-caret {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+  color: var(--xy-cinnabar);
+  font-size: 13px;
+  transition: transform 0.18s ease;
+}
+
+.xy-layout-mobile .xy-mobile-card-open > .xy-mobile-card-head .xy-mobile-card-caret {
+  transform: rotate(180deg);
+}
+
+.xy-layout-mobile .xy-mobile-card-body {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--xy-line);
+  animation: xy-collapse-in 0.18s ease-out;
+}
+
+.xy-layout-mobile .xy-art-title,
+.xy-layout-mobile .xy-item-name,
+.xy-layout-mobile .xy-asset-name {
+  min-width: 0;
+}
+
+.xy-layout-mobile .xy-art-name,
+.xy-layout-mobile .xy-item-name {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.5px;
+}
+
+.xy-layout-mobile .xy-art-title {
+  flex: 1 1 auto;
+  gap: 5px;
+}
+
+.xy-layout-mobile .xy-art-head .xy-toggle,
+.xy-layout-mobile .xy-item-head .xy-toggle {
+  min-width: 44px;
+  padding: 2px 6px;
+  font-size: 8.5px;
+}
+
+.xy-layout-mobile .xy-pill,
+.xy-layout-mobile .xy-quality,
+.xy-layout-mobile .xy-tag,
+.xy-layout-mobile .xy-item-tag,
+.xy-layout-mobile .xy-idtag {
+  padding: 1px 5px;
+  font-size: 8.5px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.xy-layout-mobile .xy-element-mini {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  padding: 0;
+  font-size: 8px;
+}
+
+.xy-layout-mobile .xy-item-qty,
+.xy-layout-mobile .xy-item-pos,
+.xy-layout-mobile .xy-asset-scale {
+  flex: 0 0 auto;
+  font-size: 9.5px;
+}
+
+.xy-layout-mobile .xy-item-desc,
+.xy-layout-mobile .xy-art-desc,
+.xy-layout-mobile .xy-effect-list,
+.xy-layout-mobile .xy-effect-line {
+  overflow-wrap: anywhere;
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+.xy-layout-mobile .xy-item-meta,
+.xy-layout-mobile .xy-art-meta,
+.xy-layout-mobile .xy-item-tags {
+  gap: 3px;
+  margin-bottom: 3px;
+}
+
+/* ============ 关系 ============ */
+.xy-layout-mobile .xy-npc-list {
+  gap: 6px;
+}
+
+.xy-layout-mobile .xy-npc-head,
+.xy-layout-mobile .xy-wild-head {
+  gap: 6px;
+  padding: 6px 8px;
+}
+
+.xy-layout-mobile .xy-npc-avatar,
+.xy-layout-mobile .xy-wild-icon {
+  flex-basis: 34px;
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+}
+
+.xy-layout-mobile .xy-npc-name,
+.xy-layout-mobile .xy-wild-name {
+  font-size: 12.5px;
+}
+
+.xy-layout-mobile .xy-npc-line1,
+.xy-layout-mobile .xy-npc-line2 {
+  gap: 3px;
+}
+
+.xy-layout-mobile .xy-npc-line2,
+.xy-layout-mobile .xy-npc-realm,
+.xy-layout-mobile .xy-wild-line2 {
+  font-size: 9.5px;
+}
+
+.xy-layout-mobile .xy-favor {
+  flex-basis: 44px;
+  padding: 3px 5px;
+}
+
+.xy-layout-mobile .xy-favor-num {
+  font-size: 14px;
+}
+
+.xy-layout-mobile .xy-favor-label {
+  font-size: 8px;
+}
+
+.xy-layout-mobile .xy-npc-body,
+.xy-layout-mobile .xy-wild-body {
+  padding: 8px;
+}
+
+.xy-layout-mobile .xy-npc-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.xy-layout-mobile .xy-collapse-head {
+  padding: 4px 6px;
+}
+
+.xy-layout-mobile .xy-collapse-title {
+  font-size: 9.5px;
+  letter-spacing: 1.5px;
+}
+
+.xy-layout-mobile .xy-collapse-count {
+  padding: 0 4px;
+  font-size: 8px;
+}
+
+/* ============ 固定资产 ============ */
+.xy-layout-mobile .xy-asset-card::after {
+  top: -4px;
+  font-size: 38px;
+}
+
+.xy-layout-mobile .xy-asset-head {
+  gap: 5px;
+  padding-right: 0;
+}
+
+.xy-layout-mobile .xy-asset-card:has(> .xy-trash) .xy-asset-head {
+  padding-right: 20px;
+}
+
+.xy-layout-mobile .xy-asset-name {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.3;
+  letter-spacing: 1px;
+}
+
+.xy-layout-mobile .xy-asset-type,
+.xy-layout-mobile .xy-asset-select {
+  padding: 1px 5px;
+  font-size: 9px;
+}
+
+.xy-layout-mobile .xy-asset-location,
+.xy-layout-mobile .xy-asset-status,
+.xy-layout-mobile .xy-facility-head,
+.xy-layout-mobile .xy-facility-yield,
+.xy-layout-mobile .xy-facility-effect,
+.xy-layout-mobile .xy-facility-date {
+  font-size: 9.5px;
+  line-height: 1.5;
+}
+
+.xy-layout-mobile .xy-asset-status {
+  margin: 5px 0 7px;
+}
+
+.xy-layout-mobile .xy-asset-section-title {
+  margin: 6px 0 4px;
+  font-size: 10.5px;
+}
+
+.xy-layout-mobile .xy-facility {
+  padding: 6px 7px;
+}
+
+/* ============ 传闻与地图 ============ */
+.xy-layout-mobile .xy-rumor-list {
+  gap: 6px;
+}
+
+.xy-layout-mobile .xy-rumor {
+  min-height: 66px;
+  padding: 9px 10px 9px 55px;
+}
+
+.xy-layout-mobile .xy-rumor::before {
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
+}
+
+.xy-layout-mobile .xy-rumor-seal {
+  left: 11px;
+  top: 11px;
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+  font-size: 9px;
+}
+
+.xy-layout-mobile .xy-rumor-time,
+.xy-layout-mobile .xy-rumor-source,
+.xy-layout-mobile .xy-rumor-difficulty {
+  font-size: 9px;
+}
+
+.xy-layout-mobile .xy-rumor-body {
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.xy-layout-mobile .xy-map-current {
+  gap: 5px;
+  padding: 5px 8px;
+  font-size: 10.5px;
+  letter-spacing: 1px;
+}
+
+.xy-layout-mobile .xy-map-tree {
+  min-width: min(220px, 100%);
+  max-width: 100%;
+  padding: 6px;
+}
+
+.xy-layout-mobile .xy-map-stage {
+  gap: 5px;
+  padding: 7px;
+}
+
+.xy-layout-mobile .xy-map-stage-title {
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.xy-layout-mobile .xy-map-stage-btn {
+  padding: 2px 6px;
+  font-size: 9px;
+}
+
+.xy-layout-mobile .xy-map-stage-body {
+  min-height: 150px;
+}
+
+/* 真正窄屏时进一步让操作栏与设置面板安全换行。 */
+@media (max-width: 360px) {
+  .xy-layout-options {
+    grid-template-columns: 1fr;
+  }
+
+  .xy-layout-mobile .xy-app-collapse-bar {
+    flex-wrap: wrap;
+  }
+
+  .xy-layout-mobile .xy-edit-toggle,
+  .xy-layout-mobile .xy-summary-btn,
+  .xy-layout-mobile .xy-settings-btn,
+  .xy-layout-mobile .xy-app-collapse-btn {
+    font-size: 8.5px;
+  }
+
+  .xy-layout-mobile .xy-skill-panel .xy-skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .xy-layout-mobile .xy-tabs {
+    overflow-x: auto;
+  }
+
+  .xy-layout-mobile .xy-tab {
+    flex: 0 0 42px;
+    min-width: 42px;
+  }
+}
