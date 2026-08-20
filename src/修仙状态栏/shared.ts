@@ -410,8 +410,10 @@ export const filteredBeasts = computed(() => filterRecord(store.data?.灵兽, '�
 
 export const sortedRelations = computed(() => {
   const list = store.data?.关系列表;
+  const userName = store.data?.姓名;
   if (!list) return [] as { name: string; npc: any; idx: number }[];
   return Object.entries(list)
+    .filter(([name]) => name !== userName && name !== '__user__' && name !== 'User')
     .map(([name, npc], idx) => ({ name, npc: npc as any, idx }))
     .sort((a, b) => {
       const pa = a.npc?.在场 ? 0 : a.npc?.道侣 ? 1 : 2;
