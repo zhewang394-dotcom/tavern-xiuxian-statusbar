@@ -31,6 +31,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
       '@util': path.resolve(__dirname, 'util'),
       'lodash': 'lodash-es',
+      'zod': path.resolve(__dirname, 'util/zod-bridge.ts'),
     },
   },
   root: 'src/修仙状态栏',
