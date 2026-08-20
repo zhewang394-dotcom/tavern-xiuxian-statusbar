@@ -223,23 +223,22 @@ export function buildInitialStatData(sel: Selection): Record<string, any> {
   if (mp === '散修') 身份.push('散修');
   else if (mp) 身份.push(`${mp}弟子`);
 
-  // —— 主角形象初始化（若玩家有自创剧本或描述，则以自创为基础，否则由 AI 首轮脑补） ——
-  const customBody = sel.customStory?.body || '';
-  const initialAppearance = customBody ? `玩家自拟开局：${customBody.slice(0, 120)}...` : '容颜绝世，仙肌玉体，冰肌玉骨（待AI结合开局脑补）';
-  const initialPersonality = sel.customStory?.desc || '清雅温婉，道心坚定（待AI结合开局脑补）';
+  // —— 主角形象初始化（默认优雅占位，由 AI 结合开局设定在首轮提炼润色） ——
+  const initialAppearance = '绝色容姿，冰肌玉骨（待AI结合开局提炼）';
+  const initialPersonality = '清雅温婉，道心坚定（待AI结合开局提炼）';
 
   return {
     // —— 原 基本信息.* (扁平化:升至根级) ——
     姓名: sel.道号 || '无名',
     性格: initialPersonality,
     外貌: initialAppearance,
-    着装: '宗门素色法袍，配以轻纱软缎（待AI结合开局脑补）',
-    气质: '仙姿佚貌，清雅绝伦',
+    着装: '素雅道袍，轻纱若云（待AI结合开局提炼）',
+    气质: '仙姿佚貌，清雅绝伦（待AI结合开局提炼）',
     魅力: 85,
     性器: {
-      阴唇: sel.性别 === '女' ? '紧致粉嫩，初绽幽香，未经人事' : undefined,
-      乳房: sel.性别 === '女' ? '饱满挺拔，隐于素色法袍之下' : undefined,
-      玉穴: sel.性别 === '女' ? '幽径紧窄，灵泉微润，未曾接纳凡物' : undefined,
+      阴唇: sel.性别 === '女' ? '紧致粉嫩，初绽幽香，未经人事（待AI结合开局提炼）' : undefined,
+      乳房: sel.性别 === '女' ? '饱满挺拔，隐于素色法袍之下（待AI结合开局提炼）' : undefined,
+      玉穴: sel.性别 === '女' ? '幽径紧窄，灵泉微润，未曾接纳凡物（待AI结合开局提炼）' : undefined,
       落红: sel.性别 === '女' ? (sel.元阳元阴 ? '元阴未泄，冰清玉洁，守宫砂皎然' : '已破瓜落红') : undefined,
     },
     种族: '人族',
