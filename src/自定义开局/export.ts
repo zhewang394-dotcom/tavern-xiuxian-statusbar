@@ -485,7 +485,6 @@ export function generateAIPrompt(sel: Selection): string {
     `- 故事时间须从「${story?.settings.时间.年 ?? 7000}年」开始推进；`,
     `- 玩家所属：${story?.settings.宗门 ?? '散修'}；`,
     `- 初始境界：${story?.settings.初始境界.大境界 ?? '炼气'}${story?.settings.初始境界.小境界 ?? '初期'}；`,
-    '- 【重要·变量首轮初始化】：请根据玩家在开局设定/剧本正文中给出的外貌、身材、发色、性格与剧情线索，在首轮回复的 <UpdateVariable> 中以 replace 操作输出详细且生动的主角「外貌」、「性格」、「着装」、「魅力」以及「性器」等字段，生动补全细节！',
     '- 请生成一段贴合上述设定的开局叙述，篇幅自然即可，不必再罗列上述信息。',
   ].join('\n');
 
