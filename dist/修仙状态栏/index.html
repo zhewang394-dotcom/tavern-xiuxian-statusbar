@@ -15,13 +15,56 @@
 
 
 /*# sourceMappingURL=main.css.map*/</style></head><body><div id="app"></div>
+<style>
+/* 主角专属·仙姿玉貌卡片样式 */
+#xy-user-custom-card {
+  margin: 10px 0 12px 0;
+  padding: 12px 14px;
+  background: var(--xy-card-bg, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--xy-card-border, rgba(255, 255, 255, 0.12));
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+#xy-user-custom-card .xy-custom-header {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--xy-accent, #c8a265);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px dashed var(--xy-card-border, rgba(255, 255, 255, 0.1));
+  padding-bottom: 4px;
+}
+#xy-user-custom-card .xy-custom-item {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+#xy-user-custom-card .xy-custom-label {
+  display: inline-block;
+  color: var(--xy-text-muted, #a0a0a0);
+  font-weight: 500;
+  width: 48px;
+  flex-shrink: 0;
+}
+#xy-user-custom-card .xy-custom-val {
+  color: var(--xy-text-main, #e2e2e2);
+}
+#xy-user-custom-card .xy-custom-empty {
+  color: var(--xy-text-muted, #777);
+  font-style: italic;
+}
+</style>
+
 <script>
 (function() {
   function renderProtagonistCard() {
     try {
       var overviewGrid = document.querySelector('.xy-overview-grid');
       var tabs = document.querySelector('.xy-tabs');
-      if (!overviewGrid || !tabs) return;
+      if (!overviewGrid) return;
 
       var statData = {};
       try {
@@ -40,39 +83,27 @@
       var waimao = statData['外貌'] || '';
       var zhuang = statData['着装'] || '';
 
-      if (!xingge && !waimao && !zhuang) return;
-
       var card = document.getElementById('xy-user-custom-card');
       if (!card) {
         card = document.createElement('div');
         card.id = 'xy-user-custom-card';
-        card.className = 'xy-card';
-        card.style.marginTop = '10px';
-        card.style.marginBottom = '12px';
-        overviewGrid.parentNode.insertBefore(card, tabs);
+        if (tabs && tabs.parentNode) {
+          overviewGrid.parentNode.insertBefore(card, tabs);
+        } else {
+          overviewGrid.parentNode.appendChild(card);
+        }
       }
 
-      var innerContent = '';
-      if (xingge) {
-        innerContent += '<div class="xy-mini-block" style="margin-top: 0;">' +
-          '<h4>性 格</h4>' +
-          '<p>' + xingge + '</p>' +
-        '</div>';
-      }
-      if (waimao) {
-        innerContent += '<div class="xy-mini-block">' +
-          '<h4>外 貌</h4>' +
-          '<p>' + waimao + '</p>' +
-        '</div>';
-      }
-      if (zhuang) {
-        innerContent += '<div class="xy-mini-block">' +
-          '<h4>着 装</h4>' +
-          '<p>' + zhuang + '</p>' +
-        '</div>';
-      }
+      var xinggeHtml = xingge ? '<span class="xy-custom-val">' + xingge + '</span>' : '<span class="xy-custom-empty">尚待显现</span>';
+      var waimaoHtml = waimao ? '<span class="xy-custom-val">' + waimao + '</span>' : '<span class="xy-custom-empty">天资内敛，仙姿初成</span>';
+      var zhuangHtml = zhuang ? '<span class="xy-custom-val">' + zhuang + '</span>' : '<span class="xy-custom-empty">素雅青玄修道法袍</span>';
 
-      if (innerContent && card.innerHTML !== innerContent) {
+      var innerContent = '<div class="xy-custom-header"><span>✧</span> 主角仙姿 · 风貌仪态</div>' +
+        '<div class="xy-custom-item"><span class="xy-custom-label">【性格】</span>' + xinggeHtml + '</div>' +
+        '<div class="xy-custom-item"><span class="xy-custom-label">【外貌】</span>' + waimaoHtml + '</div>' +
+        '<div class="xy-custom-item"><span class="xy-custom-label">【着装】</span>' + zhuangHtml + '</div>';
+
+      if (card.innerHTML !== innerContent) {
         card.innerHTML = innerContent;
       }
     } catch(e) {
@@ -82,7 +113,7 @@
 
   var observer = new MutationObserver(renderProtagonistCard);
   observer.observe(document.body, { childList: true, subtree: true });
-  setInterval(renderProtagonistCard, 1000);
+  setInterval(renderProtagonistCard, 800);
   window.addEventListener('DOMContentLoaded', renderProtagonistCard);
   window.addEventListener('load', renderProtagonistCard);
 })();
