@@ -223,9 +223,25 @@ export function buildInitialStatData(sel: Selection): Record<string, any> {
   if (mp === '散修') 身份.push('散修');
   else if (mp) 身份.push(`${mp}弟子`);
 
+  // —— 主角形象初始化（若玩家有自创剧本或描述，则以自创为基础，否则由 AI 首轮脑补） ——
+  const customBody = sel.customStory?.body || '';
+  const initialAppearance = customBody ? `玩家自拟开局：${customBody.slice(0, 120)}...` : '容颜绝世，仙肌玉体，冰肌玉骨（待AI结合开局脑补）';
+  const initialPersonality = sel.customStory?.desc || '清雅温婉，道心坚定（待AI结合开局脑补）';
+
   return {
     // —— 原 基本信息.* (扁平化:升至根级) ——
     姓名: sel.道号 || '无名',
+    性格: initialPersonality,
+    外貌: initialAppearance,
+    着装: '宗门素色法袍，配以轻纱软缎（待AI结合开局脑补）',
+    气质: '仙姿佚貌，清雅绝伦',
+    魅力: 85,
+    性器: {
+      阴唇: sel.性别 === '女' ? '紧致粉嫩，初绽幽香，未经人事' : undefined,
+      乳房: sel.性别 === '女' ? '饱满挺拔，隐于素色法袍之下' : undefined,
+      玉穴: sel.性别 === '女' ? '幽径紧窄，灵泉微润，未曾接纳凡物' : undefined,
+      落红: sel.性别 === '女' ? (sel.元阳元阴 ? '元阴未泄，冰清玉洁，守宫砂皎然' : '已破瓜落红') : undefined,
+    },
     种族: '人族',
     身份,
     性别: sel.性别,
@@ -470,6 +486,7 @@ export function generateAIPrompt(sel: Selection): string {
     `- 故事时间须从「${story?.settings.时间.年 ?? 7000}年」开始推进；`,
     `- 玩家所属：${story?.settings.宗门 ?? '散修'}；`,
     `- 初始境界：${story?.settings.初始境界.大境界 ?? '炼气'}${story?.settings.初始境界.小境界 ?? '初期'}；`,
+    '- 【重要·变量首轮初始化】：请根据玩家在开局设定/剧本正文中给出的外貌、身材、发色、性格与剧情线索，在首轮回复的 <UpdateVariable> 中以 replace 操作输出详细且生动的主角「外貌」、「性格」、「着装」、「魅力」以及「性器」等字段，生动补全细节！',
     '- 请生成一段贴合上述设定的开局叙述，篇幅自然即可，不必再罗列上述信息。',
   ].join('\n');
 
